@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import AttendeeBox from './AttendeeBox';
 
 class App extends Component {
   render() {
+    // FILL THIS OUT WITH STATIC DATE
+    const attendees = [];
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        {attendees.map(attendee => <AttendeeBox status={attendee.status} step={attendee.step} username={attendee.username} />)}
       </div>
     );
   }

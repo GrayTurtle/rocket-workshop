@@ -1,0 +1,3 @@
+/*
+    Each attendee for when we click on them in God View
+*/

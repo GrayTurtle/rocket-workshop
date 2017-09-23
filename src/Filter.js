@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import AttendeeBox from './AttendeeBox';
 import './Filter.css';
 
 class Filter extends Component {

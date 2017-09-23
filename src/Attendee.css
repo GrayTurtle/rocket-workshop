@@ -1,0 +1,55 @@
+
+
+.AttendeeInfo {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.Name {
+    background: #EE4266;
+    height: auto;
+    width: auto;
+    margin: 10px;
+    padding: 25px;
+}
+
+.Number {
+    background: #EE4266;
+    height: auto;
+    width: auto;
+    margin: 10px;
+    padding: 25px;
+}
+
+.Status {
+    background: #EE4266;
+    height: auto;
+    width: auto;
+    margin: 10px;
+    padding: 25px;
+}
+
+.Step {
+    background: #EE4266;
+    height: auto;
+    width: auto;
+    margin: 10px;
+    padding: 25px;
+}
+
+.Description {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.DescriptionBox {
+    background: #EE4266;
+    height: 200px;
+    width: 1000px;
+    text-align: left;
+    word-wrap: break-word;
+    margin: 10px;
+    padding: 25px;
+}

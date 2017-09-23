@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import AttendeeBox from './AttendeeBox';
 import './GodMode.css';
-import Filter from './Filter'
+import Filter from './Filter';
+import Attendee from './Attendee';
 
 class GodMode extends Component {
 
@@ -49,7 +50,7 @@ class GodMode extends Component {
         </div>
 
         <div className="AttendeeBoxes">
-        {attendees.filter(filterAttendees).map(attendee =>
+            {attendees.filter(filterAttendees).map(attendee =>
                 <AttendeeBox status={attendee.status} step={attendee.step}
             username={attendee.username} num={attendee.num}/>)}
         </div>
@@ -60,3 +61,9 @@ class GodMode extends Component {
 }
 
 export default GodMode;
+
+// <div className="Attendee">
+//     {attendees.map(attendee =>
+//         <Attendee status={attendee.status} step={attendee.step}
+//     username={attendee.username} num={attendee.num}/>)}
+// </div>

@@ -1,0 +1,7 @@
+.presentation-step {
+    min-height: 50vh;
+    border: 1px solid #f1f1f1;
+    border-radius: 4px;
+    padding: 20px;
+    margin-top: 5px;
+}

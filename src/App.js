@@ -12,6 +12,8 @@ import Presentation from './workshops/presentation';
 import Login from './authentication/login';
 import Signup from './authentication/signup';
 import Navbar from './navbar';
+import Home from './homepage';
+import Organizations from './organizer/organizations';
 
 class App extends Component {
   render() {
@@ -19,6 +21,8 @@ class App extends Component {
       <div>
         <Navbar />
         <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/organizations" component={Organizations} />
           <Route exact path="/organizer/:organizerId" component={Organizer} />
           <Route path="/organizer/:organizerId/workshops/:workshopId/present" component={Presentation} />
           <Route path="/organizer/:organizerId/workshops/:workshopId/edit" component={Authoring} />

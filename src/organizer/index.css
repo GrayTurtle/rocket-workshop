@@ -1,0 +1,13 @@
+.workshops {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+}
+
+.workshops-header {
+    font-size: 25px;
+    font-weight: 100;
+    padding: 10px;
+    text-align: center;
+}

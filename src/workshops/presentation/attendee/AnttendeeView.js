@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import Icon from 'react-icons-kit';
 import { ic_keyboard_arrow_left } from 'react-icons-kit/md/ic_keyboard_arrow_left'; 
 import { ic_keyboard_arrow_right } from 'react-icons-kit/md/ic_keyboard_arrow_right';   
-import Step from './step';
-import './present.css';
 import { connect } from 'react-redux';
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
-import { Link } from 'react-router-dom';
+
+import Step from '../step';
+import '../assets/css/present.css';
+import './assets/css/AnttendeeView.css';
 
 class AttendeeView extends React.Component {
   
@@ -27,7 +28,6 @@ class AttendeeView extends React.Component {
       const { match: { params: { organizerId, workshopId, attendeeId } } } = nextProps; 
       const workshop = nextProps.workshop.organizers[organizerId].workshops[workshopId];
       const attendee = workshop.attendee[attendeeId];
-      debugger;
       this.setState({
         workshop,
         attendee,
@@ -38,22 +38,22 @@ class AttendeeView extends React.Component {
   }
   
   onClick = () => {
-    const { activeStep, status, workshop: { steps } } = this.state;
-    const { firebase } = this.props;
+    const { activeStep, status, workshop } = this.state;
+    const { firebase, match: { params: { organizerId, workshopId, attendeeId } }  } = this.props;
     if (status === 'WORKING') {
       this.setState({
         status: 'COMPLETE'
       }, () => {
-         firebase.set('organizers/acm/workshops/23423d/status', 'COMPLETE');
+         firebase.set(`organizers/${organizerId}/workshops/${workshopId}/attendee/${attendeeId}/status`, 'COMPLETE');
       });
     } else if (status === 'COMPLETE') {
-      if (activeStep + 1 === steps.length) return;
+      if (activeStep + 1 === workshop.steps.length) return;
       this.setState({
         activeStep: activeStep + 1,
-        status: 'WORKING'
+        status: activeStep + 1 > workshop.step ? 'ROCKET' : 'WORKING'
       }, () => {
-         firebase.set('organizers/acm/workshops/23423d/step', activeStep + 1);
-         firebase.set('organizers/acm/workshops/23423d/status', 'WORKING');
+         firebase.set(`organizers/${organizerId}/workshops/${workshopId}/attendee/${attendeeId}/step`, activeStep + 1);
+         firebase.set(`organizers/${organizerId}/workshops/${workshopId}/attendee/${attendeeId}/status`, 'WORKING');
       });
     }
   }
@@ -87,7 +87,7 @@ class AttendeeView extends React.Component {
         <div className="back" onClick={this.goFoward}>
           <Icon size={18} icon={ic_keyboard_arrow_right} />
         </div>
-        <div className={`action ${status.toLowerCase()}`} onClick={this.onClick}>{status === 'WORKING' ? 'Complete' : 'Next Step'}</div>
+        <div className={`action-attendee ${status.toLowerCase()}`} onClick={this.onClick}>{status === 'WORKING' ? 'Complete' : 'Next Step'}</div>
       </div>
       <Step step={workshop.steps[activeStep]} />
     </div>
@@ -96,16 +96,10 @@ class AttendeeView extends React.Component {
   }
 }
 
-const wrapped = firebaseConnect((props) => {
-  const { match: { params }} = props;
-  return  ([
-    `/organizers/${params.organizerId}/workshops/${params.workshopId}`
-  ])
-})(AttendeeView)
+const wrapped = firebaseConnect(({ match: { params }}) => ([
+  `/organizers/${params.organizerId}/workshops/${params.workshopId}`
+]))(AttendeeView);
 
 export default connect(
-  (props) => {
-    const { firebase: {data} } = props;
-    return { attendee: !isEmpty(data) && data };
-  }
-)(wrapped)
+  ({ firebase: { data }}) => ({ workshop: !isEmpty(data) && data })
+)(wrapped);

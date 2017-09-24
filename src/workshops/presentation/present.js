@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'react-icons-kit';
-import { ic_keyboard_arrow_left } from 'react-icons-kit/md/ic_keyboard_arrow_left'; 
-import { ic_keyboard_arrow_right } from 'react-icons-kit/md/ic_keyboard_arrow_right';   
-import Step from './step';
-import './present.css';
 import { connect } from 'react-redux';
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 import { Link } from 'react-router-dom';
+import { ic_keyboard_arrow_left } from 'react-icons-kit/md/ic_keyboard_arrow_left'; 
+import { ic_keyboard_arrow_right } from 'react-icons-kit/md/ic_keyboard_arrow_right';   
+
+import Step from './step';
+import './assets/css/present.css';
+
 class Present extends React.Component {
   
   constructor(props) {
@@ -22,6 +24,7 @@ class Present extends React.Component {
   }
   
   componentWillReceiveProps(nextProps) {
+    debugger;
     if (!isEmpty(nextProps.workshop)) {
       const { match: { params: { organizerId, workshopId } } } = nextProps; 
       const workshop = nextProps.workshop.organizers[organizerId].workshops[workshopId];
@@ -85,7 +88,7 @@ class Present extends React.Component {
     const { workshop, status, activeStep } = this.state;
     const { match: { url } } = this.props;
     if (isEmpty(workshop)) return <div></div>;
-    
+
     return (
     <div className="presentation">
       <Link className="toggle-mode" to={`${url}/godmode`}>View attendees</Link>
@@ -100,19 +103,17 @@ class Present extends React.Component {
         </div>
         <div className={`action ${status.toLowerCase()}`} onClick={this.onClick}>{status === 'WORKING' ? 'Complete' : 'Next Step'}</div>
       </div>
-      <Step step={workshop.steps[activeStep]} />
+      {workshop.steps && workshop.steps.length > 0 && <Step step={workshop.steps[activeStep]} />}
     </div>
   );
 
   }
 }
 
-const wrapped = firebaseConnect(() => ([
-  'organizers/acm/workshops/23423d'
-]))(Present)
+const wrapped = firebaseConnect(({ match: { params }}) => ([
+  `/organizers/${params.organizerId}/workshops/${params.workshopId}`
+]))(Present);
 
 export default connect(
-  ({ firebase: { data } }) => ({
-    workshop: data,
-  })
-)(wrapped)
+  ({ firebase: { data }}) => ({ workshop: !isEmpty(data) && data })
+)(wrapped);

@@ -1,0 +1,8 @@
+.action-attendee {
+    padding: 10px;
+    background: #12b112;
+    color: white;
+    border-radius: 4px;
+    line-height: 38px;
+    cursor: pointer;
+}

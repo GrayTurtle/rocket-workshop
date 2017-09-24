@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { EditorState } from 'draft-js';
 import { Editor as Draft } from 'react-draft-wysiwyg';
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import './Editor.css';
+import './assets/css/Editor.css';
 
 class Editor extends Component {
 

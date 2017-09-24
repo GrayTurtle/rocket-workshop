@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import update from 'immutability-helper';
 import uid from 'uid';
-import { convertToRaw } from 'draft-js';
-import { firebaseConnect } from 'react-redux-firebase';
+import { convertToRaw, EditorState, ContentState, convertFromRaw  } from 'draft-js';
+import { connect } from 'react-redux';
+import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 
-import './index.css';
+import './assets/css/index.css';
 import Editor from './Editor';
 import Step from './Step';
 
@@ -27,11 +28,29 @@ class Authoring extends Component {
     super(props);
 
     this.state = {
-      steps: [
-        { name: 'Step 1', editorState: null, id: uid() },
-      ],
+      steps: [],
       active: 0
     };
+  }
+  
+  componentWillReceiveProps(nextProps) {
+    if (!isEmpty(nextProps.workshop)) {
+      const { match: { params: { organizerId, workshopId } } } = nextProps; 
+      const workshop = nextProps.workshop.organizers[organizerId].workshops[workshopId];
+      
+      if (workshop && workshop.steps && workshop.steps.length > 0 && workshop.steps[0]) {
+        debugger;
+        workshop.steps = workshop.steps.map(step => {
+         const contentState = convertFromRaw(JSON.parse(step.contentState));
+         const editorState = EditorState.createWithContent(contentState);
+         return { ...step, editorState}
+       });
+      }
+
+      this.setState({
+        ...workshop
+      });
+    }
   }
   
   onEditorChange = (editorState) => {
@@ -40,6 +59,14 @@ class Authoring extends Component {
     this.setState({
       steps: update(steps, {[active]: {$set: {...step, editorState}}})
     });
+    
+    const { match: { url }, firebase } = this.props;
+    const parts = url.split('/');
+    
+    steps.forEach(step => { 
+      step.contentState = JSON.stringify(convertToRaw(step.editorState.getCurrentContent()));
+    });
+    firebase.set(`/organizers/${parts[2]}/workshops/${parts[4]}/steps`, steps);
   }
   
   onStepChange = (active) => {
@@ -87,10 +114,13 @@ class Authoring extends Component {
 
   render() {
     const { steps, active } = this.state;
+    
+    if (steps.length === 0) return <div></div>;
+    
     return (
       <div className="authoring">
         <div className="side-panel">
-          {steps.map((step, i) => (
+          {steps && steps.map((step, i) => (
             <Step 
               active={i === active} 
               name={step.name} 
@@ -113,4 +143,10 @@ class Authoring extends Component {
 
 }
 
-export default firebaseConnect()(Authoring);
+const wrapped = firebaseConnect(({ match: { params }}) => ([
+  `/organizers/${params.organizerId}/workshops/${params.workshopId}`
+]))(Authoring);
+
+export default connect(
+  ({ firebase: { data }}) => ({ workshop: !isEmpty(data) && data })
+)(wrapped);

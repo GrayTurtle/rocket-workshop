@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import './Attendee.css';
+import './assets/css/Attendee.css';
 import { connect } from 'react-redux';
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 
@@ -15,7 +15,7 @@ class Attendee extends Component {
           num: 0,
           step: 0,
           name: '',
-          status: 'GOOD'
+          status: 'COMPLETE'
         }
       }
     }
@@ -55,7 +55,7 @@ class Attendee extends Component {
                         User: {attendee.username}
                     </div>
                     <div className="Step info-box">
-                        Step: {attendee.step}
+                        Step: {attendee.step + 1}
                     </div>
                 </div>
 

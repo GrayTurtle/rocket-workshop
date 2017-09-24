@@ -4,7 +4,7 @@ import Icon from 'react-icons-kit';
 import { ic_delete_forever } from 'react-icons-kit/md/ic_delete_forever';       
 import { DragSource } from 'react-dnd';
 
-import './Step.css';
+import './assets/css/Step.css';
 
 /**
  * Implements the drag source contract.

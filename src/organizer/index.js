@@ -4,8 +4,7 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-import Workshops from './workshops';
-import Authoring from '../workshops/authoring';
+import Workshops from './workshops/workshops';
 import './index.css';
 
 class Organizer extends Component {

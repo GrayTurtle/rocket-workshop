@@ -1,23 +1,26 @@
 import React, { Component } from 'react';
-import AttendeeBox from './AttendeeBox';
-import './GodMode.css';
-import Filter from './Filter';
-import Attendee from './Attendee';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
+
+import AttendeeBox from '../attendee/AttendeeBox';
+import './assets/css/GodMode.css';
+import Filter from './Filter';
 
 class GodMode extends Component {
 
   constructor(props){
       super(props);
-      this.state = { filter: "", attendees: []};
+      this.state = { filter: "", attendees: [], workshop: null};
   }
 
   componentWillReceiveProps(nextProps) {
-    if(isLoaded(nextProps.attendees)) {
+    if(isLoaded(nextProps.data)) {
+      const { match: { params: { workshopId, organizerId }}, data} = nextProps;
+      const workshop =  data.organizers[organizerId].workshops[workshopId];
       this.setState({
-        attendees: nextProps.attendees
+        attendees: workshop.attendee,
+        workshop
       });
     }
   }
@@ -32,15 +35,12 @@ class GodMode extends Component {
   }
   
   render() {
-    const { attendees } = this.state;
+    const { attendees, workshop } = this.state;
     const { match: { params: { organizerId, workshopId }} } = this.props;
-
     let filter = this.state.filter;
-
-    /* if true, add into array
-        if no don't
-        call back function
-    */
+    
+    if (isEmpty(workshop)) return <div></div>
+    
     const filterAttendees = function(attendee){
         if (filter === '') return true;
         return attendee.status === filter.toUpperCase()
@@ -56,7 +56,7 @@ class GodMode extends Component {
         <div className="AttendeeBoxes" ref={x => this.name = x}>
             {attendees.filter(filterAttendees).map(attendee => {
               return (
-                <AttendeeBox onClick={this.onClick} key={attendee.num} status={attendee.status} step={attendee.step} username={attendee.username} num={attendee.num}/>
+                <AttendeeBox masterStep={workshop.step} masterStatus={workshop.status} onClick={this.onClick} key={attendee.num} status={attendee.status} step={attendee.step} username={attendee.username} num={attendee.num}/>
               )
             })}
         </div>
@@ -65,12 +65,10 @@ class GodMode extends Component {
   }
 }
 
-const wrapped = firebaseConnect(() => ([
-  'organizers/acm/workshops/23423d/attendee'
-]))(GodMode)
+const wrapped = firebaseConnect(({ match: { params }}) => ([
+  `/organizers/${params.organizerId}/workshops/${params.workshopId}`
+]))(GodMode);
 
 export default connect(
-  ({ firebase: { data } }) => {
-    return { attendees: !isEmpty(data) && data.organizers.acm.workshops["23423d"].attendee }
-  }
-)(wrapped)
+  ({ firebase: { data }}) => ({ data: !isEmpty(data) && data })
+)(wrapped);

@@ -1,26 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import { Route } from 'react-router-dom';
 
 import Present from './present';
-import GodMode from './GodMode';
-import Attendee from './Attendee';
-import {
-  Route,
-} from 'react-router-dom';
+import GodMode from './godmode';
 
-import './index.css';
+import './assets/css/index.css';
 
-class Presentation extends Component {
-  render() {
+const Presentation = () => (
+  <div className="main-pres">
+    <Route exact path="/organizer/:organizerId/workshops/:workshopId/present" component={Present}/>
+    <Route path="/organizer/:organizerId/workshops/:workshopId/present/godmode" component={GodMode} />
+  </div>
+);
 
-    return (
-      <div className="main-pres">
-        <Route exact path="/organizer/:organizerId/workshops/:workshopId/present" component={Present}/>
-        <Route path="/organizer/:organizerId/workshops/:workshopId/present/godmode" component={GodMode} />
-      </div>
-     );
-  }
-
-}
+Presentation.propTypes = {
+  
+};
 
 export default Presentation;

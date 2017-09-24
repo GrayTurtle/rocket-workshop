@@ -13,9 +13,9 @@ import Login from './authentication/login';
 import Signup from './authentication/signup';
 import Navbar from './navbar';
 import Home from './homepage';
-import Organizations from './organizer/organizations';
-import Attendee from './workshops/presentation/Attendee';
-import AttendeeView from './workshops/presentation/AnttendeeView.js';
+import Organizations from './organizer';
+import Attendee from './workshops/presentation/attendee/Attendee';
+import AttendeeView from './workshops/presentation/attendee/AnttendeeView.js';
 
 class App extends Component {
   render() {

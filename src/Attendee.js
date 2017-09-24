@@ -3,7 +3,16 @@ import PropTypes from 'prop-types';
 
 import './Attendee.css';
 
+var selected = "";
 class Attendee extends Component {
+
+    onClickMentor(e) {
+        selected = e.target.name;
+    }
+    onClickAssign(e) {
+        console.log(selected);
+    }
+
     render() {
         const {status, step, username, num} = this.props;
         const attendees = {status: 'WORKING', step: 14, username: 'JOSHOHMYGOSH', num: 0};
@@ -28,14 +37,22 @@ class Attendee extends Component {
 
                 <div className="Description">
                     <div className="DescriptionBox">
-                        <h1>Description and shit</h1>
+                        <p>Description of problems and shit</p>
+                    </div>
+
+                    <div className="Mentors">
+                        <p>Mentors</p>
+                        <div className="vertical-menu" onClick={this.onClickMentor}>
+                                <a name="John Tran" href="#">John Tran</a>
+                                <a name="Josh Birdwell" href="#">Josh Birdwell</a>
+                                <a name="Kai Barclay" href="#">Kai Barclay</a>
+                                <a name="Shreya Patel" href="#">Shreya Patel</a>
+                                <a name="Patrick Leung" href="#">Patrick Leung</a>
+                        </div>
                     </div>
                 </div>
 
-                <div className="Mentors">
-                    
-                </div>
-
+                <button className="assignMentor" type="button" onClick={this.onClickAssign}>Assign</button>
             </div>
         );
     }

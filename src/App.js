@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-import AttendeeBox from './AttendeeBox';
-import GodMode from './GodMode';
-import Attendee from './Attendee';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import {
@@ -15,8 +12,9 @@ import Presentation from './workshops/presentation';
 import Login from './authentication/login';
 import Signup from './authentication/signup';
 import Navbar from './navbar';
+import Home from './homepage';
+import Organizations from './organizer/organizations';
 import JoiningForm from './joiningForm';
-
 class App extends Component {
   render() {
     return (
@@ -24,6 +22,8 @@ class App extends Component {
         <Navbar />
         <Switch>
           <Route component={JoiningForm} />
+          <Route exact path="/" component={Home} />
+          <Route exact path="/organizations" component={Organizations} />
           <Route exact path="/organizer/:organizerId" component={Organizer} />
           <Route path="/organizer/:organizerId/workshops/:workshopId/present" component={Presentation} />
           <Route path="/organizer/:organizerId/workshops/:workshopId/edit" component={Authoring} />

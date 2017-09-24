@@ -20,26 +20,46 @@ class NavBar extends Component {
       
     };
   }
+  
+  renderAuth() {
+    return (
+      <span>
+        <NavLink 
+          className="navbar-link"
+          to="/signup">
+          Signup 
+        </NavLink>
+        <NavLink 
+          className="navbar-link"
+          to="/login">
+          Login  
+        </NavLink>
+      </span>
+    )
+  }
+  
+  renderSiteLinks() {
+    return (
+      <span>
+        <NavLink 
+          className="navbar-link"
+          to="/organizations">
+          Organizations
+        </NavLink>
+      </span>
+    )
+  }
 
   render() {
     const { auth, firebase } = this.props;
 
     return (
       <div className="navbar-main">
-        { auth.isEmpty && 
-          <NavLink 
-            className="navbar-link"
-            to="/login">
-            Login  
-          </NavLink>
-        }
-        { auth.isEmpty && 
-          <NavLink 
-            className="navbar-link"
-            to="/signup">
-            Signup 
-          </NavLink>
-        }
+        <div className="navbar-header">
+          Rocket Workshop
+        </div>
+        {auth.isLoaded && !auth.isEmpty && this.renderSiteLinks()}
+        {auth.isEmpty && this.renderAuth()}
         {auth.isLoaded && !auth.isEmpty && (
           <a className="navbar-link" onClick={() => firebase.logout()}>
             Logout

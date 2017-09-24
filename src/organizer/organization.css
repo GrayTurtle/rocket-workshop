@@ -1,0 +1,14 @@
+.organization-tile {
+    min-height: 200px;
+    border: 1px solid #f1f1f1;
+    max-width: 200px;
+    border-radius: 4px;
+    flex-grow: 1;
+    background: #f9f9f9;
+}
+
+a.org-link {flex-grow: 1;text-decoration: none;}
+
+.organzation-header {
+  color: black;font-size: 20px;width: 100%;text-align: center;padding-top: 5px;font-weight: 100;border-bottom: 1px solid #f1f1f1;padding-bottom: 6px;
+}

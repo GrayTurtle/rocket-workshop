@@ -12,4 +12,14 @@ a.navbar-link {
     text-transform: uppercase;
     color: black;
     cursor: pointer;
+    display: block;
+}
+
+.navbar-header {
+    position: absolute;
+    left: 15px;
+    height: 59px;
+    line-height: 59px;
+    font-weight: 100;
+    font-size: 26px;
 }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
   Route,
+  Link
 } from 'react-router-dom';
 import Workshops from './workshops';
 import Authoring from '../workshops/authoring';
@@ -29,6 +30,7 @@ class Organizer extends Component {
     return (
       <div className="organizer">
         <Route exact path={`${url}`} render={(props) => ( <Workshops workshops={workshops} path={`${props.match.url}`} /> )} />
+        <Link to={`${url}/create`}>Create</Link>
       </div>
     );
   }

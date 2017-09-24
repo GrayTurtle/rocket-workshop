@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 import Step from './step';
+import Icon from 'react-icons-kit';
+import { ic_keyboard_arrow_left } from 'react-icons-kit/md/ic_keyboard_arrow_left'; 
+import { ic_keyboard_arrow_right } from 'react-icons-kit/md/ic_keyboard_arrow_right';       
 
 import './index.css';
 
@@ -39,9 +42,24 @@ class Presentation extends Component {
       });
     } else if (status === 'COMPLETE') {
       this.setState({
-        activeStep: activeStep + 1
+        activeStep: activeStep + 1,
+        status: 'WORKING'
       });
     }
+  }
+  
+  goBack = () => {
+    const { activeStep } = this.state;
+    this.setState({
+      activeStep: activeStep  > 0 ? activeStep - 1 : 0,
+    });
+  }
+  
+  goFoward = () => {
+    const { activeStep, workshop: { steps } } = this.state;
+    this.setState({
+      activeStep: activeStep < steps.length - 1 ? activeStep + 1 : activeStep,
+    });
   }
 
   render() {
@@ -54,9 +72,17 @@ class Presentation extends Component {
     const { steps } = workshop;
     return (
       <div className="presentation">
-        <div className="presentation-header">{workshop.header}</div>
-        <div className="current-step">{ activeStep + 1 } of { steps.length }</div>
-        <div className="action" onClick={this.onClick}>{status === 'WORKING' ? 'Complete' : 'Next Step'}</div>
+        <div className="presentation-header">{workshop.title}</div>
+        <div className="presentation-toolbar">
+          <div className="back" onClick={this.goBack}>
+            <Icon size={18} icon={ic_keyboard_arrow_left} />
+          </div>
+          <div className="current-step">{ activeStep + 1 } of { steps.length }</div>
+          <div className="back" onClick={this.goFoward}>
+            <Icon size={18} icon={ic_keyboard_arrow_right} />
+          </div>
+          <div className={`action ${status.toLowerCase()}`} onClick={this.onClick}>{status === 'WORKING' ? 'Complete' : 'Next Step'}</div>
+        </div>
         <Step step={steps[activeStep]} />
       </div>
     );

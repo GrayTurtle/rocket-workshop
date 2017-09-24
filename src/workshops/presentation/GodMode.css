@@ -1,20 +1,15 @@
 .AttendeeBoxes {
   padding-right: 10px;
   width: 100%;
-  /*display: grid;
-  grid-template-columns: 100px 100px 100px 100px 100px;
-  grid-gap: 100px;*/
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  background-color: #000;
   color: #000;
 }
 
 .Filter {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     padding-left: 10px;
-
 }

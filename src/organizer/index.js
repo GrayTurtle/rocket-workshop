@@ -30,7 +30,7 @@ class Organizer extends Component {
     return (
       <div className="organizer">
         <Route exact path={`${url}`} render={(props) => ( <Workshops workshops={workshops} path={`${props.match.url}`} /> )} />
-        <Link to={`${url}/create`}>Create</Link>
+        {/* <Link to={`${url}/create`}>Create</Link> */}
       </div>
     );
   }

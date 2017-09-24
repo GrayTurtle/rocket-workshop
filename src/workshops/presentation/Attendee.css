@@ -1,66 +1,77 @@
-
+.present-link {
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    display: block;
+    text-decoration: none;
+    color: black;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
 
 .AttendeeInfo {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    margin-top: 10px;
 }
 
-.Name {
-    background: #EE4266;
-    height: auto;
-    width: auto;
-    margin: 10px;
-    padding: 25px;
+.AttendeeInfo {
+    border: 1px solid #f1f1f1;
 }
 
-.Number {
-    background: #EE4266;
-    height: auto;
-    width: auto;
-    margin: 10px;
-    padding: 25px;
+.Attendee {
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 25px;
+    border-radius: 4px;
 }
 
-.Status {
-    background: #EE4266;
-    height: auto;
-    width: auto;
-    margin: 10px;
-    padding: 25px;
+.info-box {
+    padding: 15px;
+    font-size: 18px;
+    font-weight: 100;
 }
 
-.Step {
-    background: #EE4266;
-    height: auto;
-    width: auto;
-    margin: 10px;
-    padding: 25px;
+.DescriptionBox {
+    flex-grow: 1;
+    max-width: 80%;
 }
 
 .Description {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    height: 308px;
+    border: 1px solid #f1f1f1;
+    border-top: none;
 }
 
-.DescriptionBox {
-    background: #EE4266;
-    height: 400px;
-    width: 500px;
-    text-align: left;
-    word-wrap: break-word;
-    margin: 10px;
-    padding: 25px;
+h3.descriptionHeader {
+    text-align: center;
+    font-weight: 300;
 }
 
 .Mentors {
-    background: #EE4266;
-    margin: 10px;
+    flex-grow: 1;
+    max-width: 20%;
+}
+
+button.assignMentor {
+    width: 100%;
+    border: 1px solid #f1f1f1;
+    background: none;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: 100;
+    text-transform: uppercase;
+}
+
+.Mentors p {
+    text-align: center;
+    font-size: 18px;
 }
 
 .vertical-menu {
-    width: 200px;
+    width: 100%;
     height: 400px;
     overflow-y: auto;
 }
@@ -87,9 +98,3 @@
     color: white;
 }
 
-.assignMentor {
-    font-size: 20px;
-    height: 100px;
-    width: 800px;
-    margin: 10px;
-}

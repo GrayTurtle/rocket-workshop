@@ -11,7 +11,7 @@ class Step extends Component {
 
   render() {
     const { step: { contentState }} = this.props;
-    const html = sanitizeHtml(draftToHtml(JSON.parse(contentState)));
+    const html = draftToHtml(JSON.parse(contentState));
     return (
       <div className="presentation-step" dangerouslySetInnerHTML={{__html: html}} />
     );

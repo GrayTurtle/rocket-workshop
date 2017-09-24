@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
+import AttendeeBox from './AttendeeBox';
+import GodMode from './GodMode';
+import Attendee from './Attendee';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import {

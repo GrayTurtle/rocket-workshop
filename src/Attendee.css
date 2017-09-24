@@ -1,0 +1,95 @@
+
+
+.AttendeeInfo {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.Name {
+    background: #EE4266;
+    height: auto;
+    width: auto;
+    margin: 10px;
+    padding: 25px;
+}
+
+.Number {
+    background: #EE4266;
+    height: auto;
+    width: auto;
+    margin: 10px;
+    padding: 25px;
+}
+
+.Status {
+    background: #EE4266;
+    height: auto;
+    width: auto;
+    margin: 10px;
+    padding: 25px;
+}
+
+.Step {
+    background: #EE4266;
+    height: auto;
+    width: auto;
+    margin: 10px;
+    padding: 25px;
+}
+
+.Description {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.DescriptionBox {
+    background: #EE4266;
+    height: 400px;
+    width: 500px;
+    text-align: left;
+    word-wrap: break-word;
+    margin: 10px;
+    padding: 25px;
+}
+
+.Mentors {
+    background: #EE4266;
+    margin: 10px;
+}
+
+.vertical-menu {
+    width: 200px;
+    height: 400px;
+    overflow-y: auto;
+}
+
+.vertical-menu a {
+    background-color: #eee;
+    color: black;
+    display: block;
+    padding: 12px;
+    text-decoration: none;
+}
+
+.vertical-menu a:hover {
+    background-color: #ccc;
+}
+
+.vertical-menu a:active {
+    background-color: #434242;
+    color: white;
+}
+
+.vertical-menu a.active {
+    background-color: #4CA000;
+    color: white;
+}
+
+.assignMentor {
+    font-size: 20px;
+    height: 100px;
+    width: 800px;
+    margin: 10px;
+}

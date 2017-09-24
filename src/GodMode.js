@@ -15,9 +15,9 @@ class GodMode extends Component {
       this.setState({filter});
   }
 
-  onClick(e) {
-      console.log("asdasd");
-      //window.location.href = "./Attendee.js";
+  onClick(num) {
+      const { history } = this.props;
+      history.push(`/organizer/acm/workshops/23423d/attendee/${num}`);
   }
   render() {
     let filter = this.state.filter;
@@ -54,9 +54,9 @@ class GodMode extends Component {
             <Filter onFilterChange = {this.onFilterChange}/>
         </div>
 
-        <div className="AttendeeBoxes" onClick={this.onClick}>
+        <div className="AttendeeBoxes">
             {attendees.filter(filterAttendees).map(attendee =>
-                <AttendeeBox status={attendee.status} step={attendee.step}
+                <AttendeeBox onClick={this.onClick} status={attendee.status} step={attendee.step}
             username={attendee.username} num={attendee.num}/>)}
         </div>
 

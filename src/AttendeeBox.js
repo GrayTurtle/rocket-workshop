@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import './AttendeeBox.css';
 
-const AttendeeBox = ({ status, step, username, num }) => {
+const AttendeeBox = ({ status, step, username, num, onClick }) => {
     let statusBackground = {};
     switch (status) {
         case "WORKING":
@@ -22,7 +22,7 @@ const AttendeeBox = ({ status, step, username, num }) => {
     }
 
     return (
-        <div className="attendeeBox" style={statusBackground}>
+        <div className="attendeeBox" style={statusBackground} onClick={() => onClick(num)}>
             {username}, {num}
         </div>
     );

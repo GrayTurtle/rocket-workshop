@@ -11,7 +11,8 @@ class App extends Component {
     return (
       <div className="App">
         <GodMode/>
-        <Attendee/>
+        <Route path="/organizer/:organizerId/workshop/:workshopId/godmode" component={GodMode} />
+        <Route path="/organizer/:organizerId/workshop/:workshopId/godmode" component={GodMode} />
       </div>
     );
   }

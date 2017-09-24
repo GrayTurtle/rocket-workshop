@@ -19,6 +19,7 @@ class App extends Component {
     return (
       <Router>
         <Switch>
+          <Route component={GodMode} />
           <Route exact path="/organizer/:organizerId" component={Organizer} />
           <Route path="/organizer/:organizerId/workshops/:workshopId/present" component={Presentation} />
           <Route path="/organizer/:organizerId/workshops/:workshopId/edit" component={Authoring} />

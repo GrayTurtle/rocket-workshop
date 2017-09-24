@@ -43,11 +43,11 @@ class Attendee extends Component {
                     <div className="Mentors">
                         <p>Mentors</p>
                         <div className="vertical-menu" onClick={this.onClickMentor}>
-                                <a name="John Tran" href="#">John Tran</a>
-                                <a name="Josh Birdwell" href="#">Josh Birdwell</a>
-                                <a name="Kai Barclay" href="#">Kai Barclay</a>
-                                <a name="Shreya Patel" href="#">Shreya Patel</a>
-                                <a name="Patrick Leung" href="#">Patrick Leung</a>
+                                <a name="John Tran">John Tran</a>
+                                <a name="Josh Birdwell">Josh Birdwell</a>
+                                <a name="Kai Barclay">Kai Barclay</a>
+                                <a name="Shreya Patel">Shreya Patel</a>
+                                <a name="Patrick Leung">Patrick Leung</a>
                         </div>
                     </div>
                 </div>
@@ -57,10 +57,5 @@ class Attendee extends Component {
         );
     }
 }
-
-
-Attendee.propTypes = {
-
-};
 
 export default Attendee;

@@ -11,9 +11,9 @@ class Filter extends Component {
 
   render() {
 	return (
-	  <div className="Filter">
+	  <div className="Filter-Wrap">
 		  <select id = "dropdown" onChange={this.handleChange}>
-			  <option value="">Status</option>
+			  <option value="">ALL</option>
 			  <option value="HELP">HELP</option>
 			  <option value="WORKING">WORKING</option>
 			  <option value="ROCKET">ROCKET</option>

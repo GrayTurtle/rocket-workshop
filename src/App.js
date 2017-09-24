@@ -15,6 +15,9 @@ import Navbar from './navbar';
 import Home from './homepage';
 import Organizations from './organizer/organizations';
 import JoiningForm from './joiningForm';
+import Attendee from './workshops/presentation/Attendee';
+import AttendeeView from './workshops/presentation/AnttendeeView.js';
+
 class App extends Component {
   render() {
     return (
@@ -27,6 +30,8 @@ class App extends Component {
           <Route exact path="/organizer/:organizerId" component={Organizer} />
           <Route path="/organizer/:organizerId/workshops/:workshopId/present" component={Presentation} />
           <Route path="/organizer/:organizerId/workshops/:workshopId/edit" component={Authoring} />
+          <Route exact path="/organizer/:organizerId/workshops/:workshopId/attendee/:attendeeId" component={Attendee} />
+          <Route path="/organizer/:organizerId/workshops/:workshopId/attendee/:attendeeId/present" component={AttendeeView} />
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
         </Switch>

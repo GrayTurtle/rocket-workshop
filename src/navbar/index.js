@@ -8,19 +8,6 @@ import { NavLink } from 'react-router-dom';
 import './index.css';
 
 class NavBar extends Component {
-
-  static propTypes = {
-    
-  };
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      
-    };
-  }
-  
   renderAuth() {
     return (
       <span>

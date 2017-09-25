@@ -8,18 +8,20 @@ import { ic_present_to_all } from 'react-icons-kit/md/ic_present_to_all';
    
 import './workshop.css';
 
-const Workshop = ({ title, date, location, path, history }) => (
-  <div className="workshop-single">
-    <div className="workshop-title">{title}</div>
-    <div className="workshop-date">{ date.toDateString() }</div>
-    <Link to={'/organizer/acm/workshops/23423d/present'} className="present-workshop">
-      <Icon icon={ic_present_to_all} />
-    </Link>
-    <Link to={path} className="edit-workshop">
-      <Icon icon={ic_mode_edit} />
-    </Link>
-  </div>
-);
+const Workshop = ({ title, date, location, match, history }) => {
+  return (
+    <div className="workshop-single">
+      <div className="workshop-title">{title}</div>
+      <div className="workshop-date">{ date.toDateString() }</div>
+      <Link to={'/organizer/acm/workshops/23423d/present'} className="present-workshop">
+        <Icon icon={ic_present_to_all} />
+      </Link>
+      <Link to={''} className="edit-workshop">
+        <Icon icon={ic_mode_edit} />
+      </Link>
+    </div>
+  );
+}
 
 Workshop.propTypes = {
   

@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import update from 'immutability-helper';
 import uid from 'uid';
-import { convertToRaw, EditorState, ContentState, convertFromRaw  } from 'draft-js';
+import { convertToRaw, EditorState, convertFromRaw  } from 'draft-js';
 import { connect } from 'react-redux';
-import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
+import { firebaseConnect, isEmpty } from 'react-redux-firebase';
 
 import './assets/css/index.css';
 import Editor from './Editor';
@@ -28,7 +28,7 @@ class Authoring extends Component {
     super(props);
 
     this.state = {
-      steps: [],
+      steps: [{ editorState: EditorState.createEmpty() }],
       active: 0
     };
   }
@@ -41,9 +41,11 @@ class Authoring extends Component {
       if (workshop && workshop.steps && workshop.steps.length > 0 && workshop.steps[0]) {
         debugger;
         workshop.steps = workshop.steps.map(step => {
-         const contentState = convertFromRaw(JSON.parse(step.contentState));
-         const editorState = EditorState.createWithContent(contentState);
-         return { ...step, editorState}
+          if(typeof step.contentState === 'string') {
+            const contentState = convertFromRaw(JSON.parse(step.contentState));
+            const editorState = EditorState.createWithContent(contentState);
+            return { ...step, editorState}
+          }
        });
       }
 
@@ -60,13 +62,13 @@ class Authoring extends Component {
       steps: update(steps, {[active]: {$set: {...step, editorState}}})
     });
     
-    const { match: { url }, firebase } = this.props;
-    const parts = url.split('/');
+    const { match: { parms: { organizerId, workshopId } }, firebase } = this.props;
     
     steps.forEach(step => { 
-      step.contentState = JSON.stringify(convertToRaw(step.editorState.getCurrentContent()));
+      step.contentState = (step.editorState && JSON.stringify(convertToRaw(step.editorState.getCurrentContent())));
     });
-    firebase.set(`/organizers/${parts[2]}/workshops/${parts[4]}/steps`, steps);
+    
+    firebase.set(`/organizers/${organizerId}/workshops/${workshopId}/steps`, steps);
   }
   
   onStepChange = (active) => {

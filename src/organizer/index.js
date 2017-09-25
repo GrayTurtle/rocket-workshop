@@ -5,6 +5,8 @@ import {
   Link
 } from 'react-router-dom';
 import Workshops from './workshops/workshops';
+import { connect } from 'react-redux';
+import { firebaseConnect, isEmpty } from 'react-redux-firebase';
 import './index.css';
 
 class Organizer extends Component {
@@ -17,10 +19,14 @@ class Organizer extends Component {
     super(props);
 
     this.state = {
-      workshops: [
-        {title: 'Introduction to GitHub', steps: [], date: new Date(), location: 'Bizzell LL118', presenter: 'Josh Birdwell', mentors: ['John'], id: '23423d'}
-      ]
+      workshops: []
     };
+  }
+  
+  componentWillReceiveProps(nextProps) {
+    if (!isEmpty(nextProps.organizer)) {
+      console.log(nextProps.organizer);
+    }
   }
 
   render() {
@@ -28,12 +34,18 @@ class Organizer extends Component {
     const { match: { url }} = this.props;
     return (
       <div className="organizer">
-        <Route exact path={`${url}`} render={(props) => ( <Workshops workshops={workshops} path={`${props.match.url}`} /> )} />
-        {/* <Link to={`${url}/create`}>Create</Link> */}
+        <Route exact path={`${url}`} render={(props) => <Workshops workshops={workshops} />} />
+        <Link to={`${url}/create`}>Create</Link>
       </div>
     );
   }
 
 }
 
-export default Organizer;
+const wrapped = firebaseConnect(({ match: { params }}) => ([
+  `/organizers/${params.organizerId}`
+]))(Organizer);
+
+export default connect(
+  ({ firebase: { data }}) => ({ organizer: !isEmpty(data) && data })
+)(wrapped);

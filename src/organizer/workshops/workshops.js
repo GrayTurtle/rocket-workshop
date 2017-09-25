@@ -8,7 +8,7 @@ const Workshops = ({ workshops, path }) => (
     <div className="workshops-header">Workshops</div>
     <div className="workshops">
       {workshops.map(workshop => (
-        <Workshop {...workshop} key={uid()} path={`${path}/workshops/${workshop.id}/edit`} />
+        <Workshop {...workshop} key={uid()} />
       ))}
     </div>
   </div>

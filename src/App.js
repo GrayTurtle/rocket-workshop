@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import {
-  Route,
-  Switch
-} from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import Authoring from './workshops/authoring';
 import Organizer from './organizer';
 import Presentation from './workshops/presentation';

@@ -6,38 +6,6 @@ import { DragSource } from 'react-dnd';
 
 import './assets/css/Step.css';
 
-/**
- * Implements the drag source contract.
- */
-const cardSource = {
-  beginDrag({ name, active, index}) {
-    return {
-      name, 
-      active, 
-      index
-    };
-  }
-};
-
-/**
- * Specifies the props to inject into your component.
- */
-function collect(connect, monitor) {
-  return {
-    connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging()
-  };
-}
-
-const propTypes = {
-  text: PropTypes.string.isRequired,
-
-  // Injected by React DnD:
-  isDragging: PropTypes.bool.isRequired,
-  connectDragSource: PropTypes.func.isRequired
-};
-
-
 class Step extends Component {
 
   static propTypes = {
@@ -59,16 +27,16 @@ class Step extends Component {
   }
 
   render() {
-    const { name, active, index, onDelete, onNameChange, connectDragSource } = this.props;
+    const { name, active, index, onDelete, onNameChange } = this.props;
     
-    return connectDragSource(
+    return (
       <div className={`step ${active && 'active'}`} onClick={this.onHandlerClick}>
         <input value={name} onChange={({ target: { value }}) => onNameChange(value, index)} />
         <div className="delete" onClick={() => onDelete(index)}>
           <Icon icon={ic_delete_forever} size={20} />
         </div>
       </div>
-    );
+    )
   }
 
 }
@@ -77,4 +45,4 @@ Step.propTypes = {
   
 };
 
-export default DragSource('Step', cardSource, collect)(Step);
+export default Step;

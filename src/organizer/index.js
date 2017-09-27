@@ -19,23 +19,30 @@ class Organizer extends Component {
     super(props);
 
     this.state = {
-      workshops: []
+      workshops: [],
+      title: ''
     };
   }
   
   componentWillReceiveProps(nextProps) {
-    if (!isEmpty(nextProps.organizer)) {
-      console.log(nextProps.organizer);
+    if (!isEmpty(nextProps.data)) {
+      const { match: { params: { organizerId }}, data } = nextProps;
+      const organizer = data.organizers && data.organizers[organizerId];
+      this.setState({
+        ...organizer,
+        workshops: Array.from(Object.values(organizer.workshops))
+      });
     }
   }
 
   render() {
     const { workshops } = this.state;
     const { match: { url }} = this.props;
+
     return (
       <div className="organizer">
         <Route exact path={`${url}`} render={(props) => <Workshops workshops={workshops} />} />
-        <Link to={`${url}/create`}>Create</Link>
+        <Link className="create-workshop" to={`${url}/create`}>Create</Link>
       </div>
     );
   }
@@ -47,5 +54,5 @@ const wrapped = firebaseConnect(({ match: { params }}) => ([
 ]))(Organizer);
 
 export default connect(
-  ({ firebase: { data }}) => ({ organizer: !isEmpty(data) && data })
+  ({ firebase: { data }}) => ({ data: !isEmpty(data) && data })
 )(wrapped);

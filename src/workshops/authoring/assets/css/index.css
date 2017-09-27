@@ -1,25 +1,42 @@
 .authoring {
     display: flex;
+    flex-wrap: wrap;
 }
 
-.side-panel {
-  flex-grow: 1;
-  width: 20%;
-  display: flex;
-  flex-direction: column;
-  padding-top: 25px;
-}
-
-.editor-container {
+.tab-bar {
     flex-grow: 1;
-    padding: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    border-bottom: 1px solid #f1f1f1;
+    border-top: 1px solid #f1f1f1;
 }
 
-.editor-save {
-    padding: 20px;
-    border: 1px solid #f1f1f1;
-    width: 40px;
-    margin-top: 5px;
-    color: #09ad09;
+.tab {
+    padding: 10px;
+    font-weight: 100;
+    border-left: 1px solid #f1f1f1;
+    border-right: 1px solid #f1f1f1;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
 }
 
+.tab:hover {
+  background: #f1f1f1;
+}
+
+.tab.active {
+    background: #96242b;
+    color: white;
+}
+
+.authoring-title {
+    flex-grow: 1;
+    width: 100%;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 100;
+    padding: 5px;
+}

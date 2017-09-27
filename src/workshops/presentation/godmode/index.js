@@ -30,12 +30,12 @@ class GodMode extends Component {
   }
 
   onClick = (num) => {
-      const { history, match: { params: { organizerId, workshopId }} } = this.props;
+      const {history, match: { params: { organizerId, workshopId }} } = this.props;
       history.push(`/organizer/${organizerId}/workshops/${workshopId}/attendee/${num}`);
   }
   
   render() {
-    const { attendees, workshop } = this.state;
+    const { attendees = [], workshop } = this.state;
     const { match: { params: { organizerId, workshopId }} } = this.props;
     let filter = this.state.filter;
     
@@ -48,17 +48,20 @@ class GodMode extends Component {
 
     return (
       <div className="GodMode">
-        <Link className="toggle-mode" to={`/organizer/${organizerId}/workshops/${workshopId}/present`}>View Presentation</Link>
+        <Link className="toggle-mode" to={`/organizer/${organizerId}/workshops/${workshopId}/present/view`}>View Presentation</Link>
         <div className="Filter">
             <Filter onFilterChange = {this.onFilterChange}/>
         </div>
 
-        <div className="AttendeeBoxes" ref={x => this.name = x}>
-            {attendees.filter(filterAttendees).map(attendee => {
+        <div className="AttendeeBoxes">
+            {attendees.length > 0 && attendees.filter(filterAttendees).map(attendee => {
               return (
                 <AttendeeBox masterStep={workshop.step} masterStatus={workshop.status} onClick={this.onClick} key={attendee.num} status={attendee.status} step={attendee.step} username={attendee.username} num={attendee.num}/>
               )
             })}
+        </div>
+        <div className="empty-state">
+          {attendees.length === 0 && <div className="empty-text">No attendees have joined yet.</div>}
         </div>
       </div>
     );

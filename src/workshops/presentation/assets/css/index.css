@@ -8,3 +8,11 @@
     padding-top: 10px;
     padding-bottom: 10px;
 }
+
+.empty-text {
+    text-align: center;
+    padding: 15px;
+    font-size: 17px;
+    text-transform: uppercase;
+    font-weight: 100;
+}

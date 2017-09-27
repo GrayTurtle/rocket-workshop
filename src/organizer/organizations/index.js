@@ -32,12 +32,16 @@ class Organizations extends Component {
 
 }
 
-const wrapped = firebaseConnect(() => ([
-  `/users/MvxqUWj70FXDZRtU4QgFmhWozKg2/organizations`
-]))(Organizations)
+const wrapped = firebaseConnect((props, firebase) => { 
+  return ([
+    `/users/${firebase.auth().currentUser && firebase.auth().currentUser.uid}/organizations`
+  ]);
+})(Organizations);
 
 export default connect(
-  ({ firebase: { data: { users } }, auth }) => ({
-    organizations: users && users["MvxqUWj70FXDZRtU4QgFmhWozKg2"].organizations,
-  })
-)(wrapped)
+  ({ firebase: { data: { users }, auth: { uid } } }) => {
+    return ({
+      organizations: users && users[uid].organizations,
+    })
+  }
+)(wrapped);

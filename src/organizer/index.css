@@ -2,7 +2,8 @@
     align-items: center;
     justify-content: center;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 
 .workshops-header {
@@ -10,4 +11,21 @@
     font-weight: 100;
     padding: 10px;
     text-align: center;
+}
+a.create-workshop {
+    text-align: center;
+    display: block;
+    text-decoration: none;
+    color: #2fbb2f;
+    max-width: 510px;
+    margin: 0 auto;
+    border: 1px;
+    padding: 10px;
+    border: 1px solid #dadada;
+    border-radius: 4px;
+    margin-top: 15px;
+}
+
+a.create-workshop:hover {
+    background-color: #f1f1f1;
 }

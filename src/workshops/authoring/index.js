@@ -5,10 +5,11 @@ import uid from 'uid';
 import { convertToRaw, EditorState, convertFromRaw  } from 'draft-js';
 import { connect } from 'react-redux';
 import { firebaseConnect, isEmpty } from 'react-redux-firebase';
+import { Link } from 'react-router-dom';
 
 import './assets/css/index.css';
-import Editor from './Editor';
-import Step from './Step';
+import Content from './tabs/content';
+import Details from './tabs/details';
 
 const getActive = (active, steps) => {
   if (steps.length === 2) {
@@ -29,7 +30,8 @@ class Authoring extends Component {
 
     this.state = {
       steps: [{ editorState: EditorState.createEmpty() }],
-      active: 0
+      active: 0,
+      tab: 'CONTENT'
     };
   }
   
@@ -39,7 +41,6 @@ class Authoring extends Component {
       const workshop = nextProps.workshop.organizers[organizerId].workshops[workshopId];
       
       if (workshop && workshop.steps && workshop.steps.length > 0 && workshop.steps[0]) {
-        debugger;
         workshop.steps = workshop.steps.map(step => {
           if(typeof step.contentState === 'string') {
             const contentState = convertFromRaw(JSON.parse(step.contentState));
@@ -61,14 +62,6 @@ class Authoring extends Component {
     this.setState({
       steps: update(steps, {[active]: {$set: {...step, editorState}}})
     });
-    
-    const { match: { parms: { organizerId, workshopId } }, firebase } = this.props;
-    
-    steps.forEach(step => { 
-      step.contentState = (step.editorState && JSON.stringify(convertToRaw(step.editorState.getCurrentContent())));
-    });
-    
-    firebase.set(`/organizers/${organizerId}/workshops/${workshopId}/steps`, steps);
   }
   
   onStepChange = (active) => {
@@ -113,32 +106,42 @@ class Authoring extends Component {
     });
     firebase.set(`/organizers/${parts[2]}/workshops/${parts[4]}/steps`, steps);
   }
+  
+  changeTab = ({ target }) => {
+    this.setState({
+      tab: target.getAttribute('name')
+    });
+  }
 
   render() {
-    const { steps, active } = this.state;
+    const { steps, active, tab, title, presenter, mentors, date } = this.state;
+    const { match: { params: { organizerId, workshopId }}} = this.props;
     
     if (steps.length === 0) return <div></div>;
     
     return (
       <div className="authoring">
-        <div className="side-panel">
-          {steps && steps.map((step, i) => (
-            <Step 
-              active={i === active} 
-              name={step.name} 
-              key={step.id} 
-              onClick={this.onStepChange} 
-              onDelete={this.onStepDelete}
-              onNameChange={this.onStepNameChange}
-              index={i}
-            />
-          ))}
-          <div className="add-step" onClick={this.addStep}>+</div>
+        <div className="authoring-title">{title}</div>
+        <div className="tab-bar">
+          <div className={`tab ${tab === 'DETAILS' && 'active'}`} onClick={this.changeTab} name="DETAILS">Details</div>
+          <div className={`tab ${tab === 'CONTENT' && 'active'}`} onClick={this.changeTab} name="CONTENT">Content</div>
+          <Link className="tab" to={`/organizer/${organizerId}/workshops/${workshopId}/present/view`}>Present</Link>
         </div>
-        <div className="editor-container">
-          <Editor onChange={this.onEditorChange} editorState={steps[active].editorState} />
-          <div className="editor-save" onClick={this.onEditorSave}>Save</div>
-        </div>
+        {tab === 'CONTENT' && (
+          <Content 
+            onEditorSave={this.onEditorSave}
+            onEditorChange={this.onEditorChange}
+            active={active}
+            steps={steps}
+            addStep={this.addStep}
+            onStepChange={this.onStepChange}
+            onStepDelete={this.onStepDelete}
+            onStepNameChange={this.onStepNameChange}
+          />
+        )}
+        {tab === 'DETAILS' && ( 
+          <Details title={title} mentors={mentors} presenter={presenter} date={date} />
+        )}
       </div>
     );
   }

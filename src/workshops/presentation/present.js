@@ -24,10 +24,12 @@ class Present extends React.Component {
   }
   
   componentWillReceiveProps(nextProps) {
-    debugger;
     if (!isEmpty(nextProps.workshop)) {
       const { match: { params: { organizerId, workshopId } } } = nextProps; 
       const workshop = nextProps.workshop.organizers[organizerId].workshops[workshopId];
+      if (!workshop.steps) { 
+        workshop.steps = [];
+      }
       this.setState({
         workshop,
         activeStep: workshop.step,
@@ -86,18 +88,18 @@ class Present extends React.Component {
   
   render() {
     const { workshop, status, activeStep } = this.state;
-    const { match: { url } } = this.props;
+    const { match: { params: { workshopId, organizerId } } } = this.props;
     if (isEmpty(workshop)) return <div></div>;
 
     return (
     <div className="presentation">
-      <Link className="toggle-mode" to={`${url}/godmode`}>View attendees</Link>
+      <Link className="toggle-mode" to={`/organizer/${organizerId}/workshops/${workshopId}/present/godmode`}>View attendees</Link>
       <div className="presentation-header">{workshop.title}</div>
       <div className="presentation-toolbar">
         <div className="back" onClick={this.goBack}>
           <Icon size={18} icon={ic_keyboard_arrow_left} />
         </div>
-        <div className="current-step">{ activeStep + 1 } of { workshop.steps.length }</div>
+        {workshop.steps && workshop.steps.length > 0 && <div className="current-step">{ activeStep + 1 } of { workshop.steps.length }</div>}
         <div className="back" onClick={this.goFoward}>
           <Icon size={18} icon={ic_keyboard_arrow_right} />
         </div>

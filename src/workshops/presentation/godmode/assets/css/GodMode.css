@@ -13,3 +13,14 @@
     justify-content: center;
     padding-left: 10px;
 }
+
+.toggle-mode {
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    display: block;
+    text-decoration: none;
+    color: black;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
